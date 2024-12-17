@@ -18,12 +18,7 @@ async function fetch_key() {
             throw new Error(`Response status: ${res.status}`);
         }
 
-        const key = await res.text();
-        const id = key.split("\n")[2].replace("Comment: ", "")
-        const fing = key.split("\n")[1].replace("Comment: ", "")
-        console.log(`Key fetched!\nIdentity: ${id}\nFingerprint: ${fing}`);
-
-        return key;
+        CUR_KEY = await res.text();
     } catch (e) {
         console.error(e.message);
         window.alert(
@@ -36,6 +31,7 @@ async function fetch_key() {
 }
 
 async function encrypt_msg() {
+    console.log(CUR_KEY)
     if (!CUR_KEY) {
         console.error("No key! Can't encrypt!");
         alert("Encryption is not possible without key. Please refresh.")
@@ -58,10 +54,21 @@ async function encrypt_msg() {
 // onload
 window.onload = async () => {
     statusTextEl.innerHTML = "Fetching Key..."
-    CUR_KEY = await fetch_key();
+
+    await fetch_key();
     if (!CUR_KEY) {
         statusTextEl.innerHTML = "Error! Please refresh!"
         return;
     };
-    statusTextEl.innerHTML = "Ready!"
+
+    // oh yeah baby, love functional programming
+    const id = CUR_KEY.split("\n")[2]
+        .replace("Comment: ", "");
+    const fing = CUR_KEY.split("\n")[1]
+        .replace("Comment: ", "")
+        .replace(/\s/g, "").slice(-16);
+
+    console.log(`Key fetched!\nIdentity: ${id}\nFingerprint: ${fing}`);
+    statusTextEl.innerHTML = `Ready! ` +
+    `<span class="text-gray-600 dark:text-gray-300">(Fingerprint: ${fing})</span>`
 }
