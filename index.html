@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Azure's PGP Webapp</title>
+        <meta name="description" content="Communicate securely using PGP!">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:site_name" content="Andrew Augustine">
+        <meta property="og:title" content="Azure's PGP Webapp">
+        <meta property="og:url" content="http://azureagst.dev/pgpmsg/">
+        <meta property="og:description" content="website">
+        <meta property="og:image" content="img/favicon-512.jpg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="css/style.min.css" rel="stylesheet">
+    </head>
+    <body class="flex flex-col h-screen justify-between bg-white dark:bg-gray-800 text-black dark:text-white">
+
+        <header>
+            <nav class="h-12 bg-gray-200 border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-600">
+                <h1 class="text-xl font-semibold text-gray-800 dark:text-white">Azure's PGP Webapp</h1>
+            </nav>
+        </header>
+
+        <main class="mb-auto container px-4 py-2">
+            <p class="py-2">
+                The purpose of this page is to provide a more user-friendly way to easily send me an encrypted message via PGP. All encryption is done locally via JavaScript.
+                Don't trust me? You can view the source code of this webapp <a class="underline" href="https://github.com/Azure-Agst/pgpmsg/">here.</a>
+            </p>
+            <p class="py-2">Just type what you want me to see below, and then click send! -A</p>
+            <hr class="my-4">
+            <textarea 
+                class="border-2 my-1 p-2 max-w-full dark:text-black dark:border-gray-600 dark:bg-gray-200" 
+                id="message" rows="4" cols="80" placeholder="Message goes here..."></textarea><br>
+            <button 
+                class="m-1 py-1 px-2 transition rounded-md bg-gray-600 hover:bg-gray-400 text-white dark:hover:bg-gray-400 dark:bg-gray-200 dark:text-gray-800"
+                onclick="encrypt_msg()">Send</button>
+            <span class="font-semibold">Status: <span id="status">Loading...</span></span>
+        </main>
+
+        <footer class="h-min bg-gray-100 dark:bg-gray-700">
+            <p class="m-2 italic text-gray-600 dark:text-gray-300">
+                (c) 2024 Andrew "Azure-Agst" Augustine.
+                Uses <a class="underline" href="https://openpgpjs.org/">OpenPGP.js</a>.</p>
+        </footer>
+
+        <script src="js/openpgp.min.js"></script>
+        <script src="js/securemsg.js"></script>
+    </body>
+</html>
